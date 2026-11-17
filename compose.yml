@@ -1,0 +1,10 @@
+services:
+  lausanne:
+    image: ghcr.io/vladtraistaru/lausanne:latest
+    container_name: lausanne
+    mem_limit: 64m
+    restart: unless-stopped
+    networks: [proxy]
+networks:
+  proxy:
+    external: true

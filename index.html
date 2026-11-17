@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lausanne in 3 Days — a tourist's guide</title>
+  <meta name="description" content="A friendly 3-day guide to Lausanne: day-by-day itinerary, interactive map, best restaurants, museums, live weather and practical tips.">
+  <meta name="theme-color" content="#0b5d8a">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛵</text></svg>">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#plan">Skip to the plan</a>
+
+  <header class="hero">
+    <nav class="nav" aria-label="Sections">
+      <a href="#plan">Plan</a>
+      <a href="#map">Map</a>
+      <a href="#eat">Eat</a>
+      <a href="#museums">Museums</a>
+      <a href="#tips">Tips</a>
+      <a href="#tools">Tools</a>
+    </nav>
+    <div class="hero-body">
+      <p class="eyebrow">Your 3-day guide</p>
+      <h1>Lausanne <span>in 3 days</span></h1>
+      <p class="lead">Cathedral on the hill, Olympic Capital on the lake, UNESCO vineyards next door. Everything you need — plan, map, food, museums and tips — in one page.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#plan">See the 3-day plan</a>
+        <a class="btn ghost" href="#map">Open the map</a>
+      </div>
+      <ul class="facts" aria-label="Quick facts">
+        <li><b>Where</b>Lake Geneva, Switzerland</li>
+        <li><b>Language</b>French</li>
+        <li><b>Currency</b>Swiss franc (CHF)</li>
+        <li><b>Getting around</b>Walk + m1/m2 metro</li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="weather" class="section weather-wrap" aria-live="polite">
+      <div class="weather" id="weatherCard">
+        <h2>Weather now &amp; next days</h2>
+        <p class="muted">Loading live forecast…</p>
+      </div>
+    </section>
+
+    <section id="plan" class="section">
+      <div class="section-head">
+        <h2>The 3-day plan</h2>
+        <p>Tap a day. Tick stops as you go — your progress is saved on this device.</p>
+      </div>
+      <div class="progress" aria-label="Trip progress"><div id="progressBar"></div><span id="progressText">0 of 0 stops done</span></div>
+      <div class="tabs" role="tablist" id="dayTabs"></div>
+      <div id="dayPanel"></div>
+    </section>
+
+    <section id="map" class="section">
+      <div class="section-head">
+        <h2>Interactive map</h2>
+        <p>Filter by type, follow a day's route, or find what's close to you.</p>
+      </div>
+      <div class="map-controls">
+        <div class="chips" id="catFilters" role="group" aria-label="Filter places"></div>
+        <div class="chips" id="dayFilters" role="group" aria-label="Show a day's route"></div>
+        <button class="btn small" id="nearMe" type="button">📍 Near me</button>
+      </div>
+      <div class="map-layout">
+        <div id="mapEl" role="region" aria-label="Map of Lausanne"></div>
+        <ul class="place-list" id="placeList"></ul>
+      </div>
+      <p class="muted small">Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors. Pins are approximate — use "Directions" to navigate.</p>
+    </section>
+
+    <section id="eat" class="section alt">
+      <div class="section-head">
+        <h2>Where to eat</h2>
+        <p>Cosy Vaud cafés, lakeside terraces and one big splurge.</p>
+      </div>
+      <div class="chips" id="priceFilters" role="group" aria-label="Filter by price"></div>
+      <div class="cards" id="foodCards"></div>
+      <h3 class="sub">What to order</h3>
+      <div class="dishes" id="dishes"></div>
+    </section>
+
+    <section id="museums" class="section">
+      <div class="section-head">
+        <h2>Museums &amp; culture</h2>
+        <p>Lausanne packs a lot of museums into a small city. Here are the best.</p>
+      </div>
+      <div class="cards" id="museumCards"></div>
+    </section>
+
+    <section id="more" class="section alt">
+      <div class="section-head">
+        <h2>Extra ideas</h2>
+        <p>Spare time, bad weather or travelling with kids? Pick from these.</p>
+      </div>
+      <div class="cards" id="extraCards"></div>
+    </section>
+
+    <section id="tips" class="section">
+      <div class="section-head">
+        <h2>Practical tips</h2>
+        <p>The small things that make a trip easier.</p>
+      </div>
+      <div class="tips" id="tipGrid"></div>
+    </section>
+
+    <section id="tools" class="section alt">
+      <div class="section-head">
+        <h2>Handy tools</h2>
+        <p>A budget estimator and a pocket phrasebook.</p>
+      </div>
+      <div class="tools">
+        <div class="tool">
+          <h3>💰 Budget estimator</h3>
+          <p class="muted small">Rough cost per person, excluding your hotel.</p>
+          <div class="chips" id="budgetStyle" role="group" aria-label="Travel style"></div>
+          <label class="range">Number of days: <b id="daysVal">3</b>
+            <input type="range" id="daysRange" min="1" max="7" value="3">
+          </label>
+          <label class="range">Travellers: <b id="travVal">2</b>
+            <input type="range" id="travRange" min="1" max="6" value="2">
+          </label>
+          <div class="budget-out" id="budgetOut"></div>
+        </div>
+        <div class="tool">
+          <h3>🗣️ Phrasebook (French)</h3>
+          <p class="muted small">Tap 🔊 to hear it, or tap the phrase to copy.</p>
+          <ul class="phrases" id="phrases"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><b>Lausanne in 3 days</b> — an independent guide. Opening hours and prices change: always check the official link before you go.</p>
+    <p class="small"><button class="linklike" id="printBtn" type="button">🖨️ Print the plan</button> · <button class="linklike" id="resetBtn" type="button">Reset progress</button></p>
+    <p class="small">Weather: <a href="https://open-meteo.com/">Open-Meteo</a> · Map: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · <a href="https://leafletjs.com">Leaflet</a></p>
+  </footer>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
